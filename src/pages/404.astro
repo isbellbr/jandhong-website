@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../../site.config";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page doesn't exist."
+  noindex
+>
+  <section
+    class="flex min-h-[80vh] items-center justify-center pt-28 text-white"
+    style="background-color: var(--color-ink);"
+  >
+    <div class="container-x text-center">
+      <p class="eyebrow" style="color: var(--color-copper-soft);">404</p>
+      <h1 class="display-1 mt-4" style="color: white;">That page took the day off.</h1>
+      <p class="mx-auto mt-5 max-w-xl text-base opacity-80">
+        The page you were looking for isn't here, but the crew still is. Head back home or get in
+        touch.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="btn btn-primary">Back to home</a>
+        <a href={`tel:${site.phone.tel}`} class="btn btn-ghost-inverse">
+          Call {site.phone.display}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,353 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import Testimonial from "../components/Testimonial.astro";
+import Stars from "../components/Stars.astro";
+import CTABanner from "../components/CTABanner.astro";
+import heroImage from "../assets/photos/jandhong-hero-house.png";
+import metalRoof from "../assets/photos/jandhong-metal-roof-skylights.png";
+import windowsImg from "../assets/photos/jandhong-windows-trim.png";
+import crewRanch from "../assets/photos/jandhong-crew-roof-ranch.png";
+import { site } from "../../site.config";
+
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const featuredTestimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+const yearsActive = new Date().getFullYear() - site.founded;
+---
+
+<BaseLayout>
+  <!-- ===== HERO ===== -->
+  <section class="relative isolate flex min-h-[100svh] items-end overflow-hidden text-white">
+    <Image
+      src={heroImage}
+      alt="Custom shingle-sided home with new architectural roof — built by J&Hong Construction"
+      class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+      widths={[800, 1280, 1920, 2560]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div
+      class="absolute inset-0 -z-10"
+      style="background: linear-gradient(180deg, rgba(15,27,45,0.55) 0%, rgba(15,27,45,0.35) 35%, rgba(15,27,45,0.85) 100%);"
+    >
+    </div>
+
+    <div class="container-x relative w-full pt-32 pb-16 md:pb-28">
+      <div class="max-w-3xl">
+        <p class="eyebrow reveal text-white/85" style="color: var(--color-copper-soft);">
+          Maryland Roofing &middot; Siding &middot; Exteriors &middot; Since {site.founded}
+        </p>
+        <h1 class="display-1 reveal mt-5" style="color: white;">
+          {yearsActive} years of roofs<br /> built to outlast the weather.
+        </h1>
+        <p class="reveal mt-7 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
+          J&amp;Hong Construction is a family-run roofing and exteriors company in Gambrills, MD.
+          The same owner. The same crew. The same standards we'd hold for our own homes, for more
+          than {yearsActive} years.
+        </p>
+        <div class="reveal mt-9 flex flex-wrap items-center gap-3">
+          <a href="/contact" class="btn btn-primary">Request a Free Estimate</a>
+          <a href={`tel:${site.phone.tel}`} class="btn btn-ghost-inverse" aria-label="Call us">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+              ></path>
+            </svg>
+            {site.phone.display}
+          </a>
+        </div>
+        <div class="reveal mt-12 flex flex-wrap items-center gap-6 text-sm text-white/80">
+          <div class="flex items-center gap-2">
+            <Stars count={5} size={18} class="text-[color:var(--color-copper-soft)]" />
+            <span><strong class="text-white">5.0</strong> on Google</span>
+          </div>
+          <span class="hidden h-4 w-px bg-white/30 sm:inline-block"></span>
+          <div>
+            <strong class="text-white">MD HIC License</strong> #{site.license.number}
+          </div>
+          <span class="hidden h-4 w-px bg-white/30 sm:inline-block"></span>
+          <div>
+            <strong class="text-white">Free</strong> estimates &amp; honest quotes
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div
+      class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs tracking-[0.18em] uppercase opacity-70 md:flex"
+      aria-hidden="true"
+    >
+      <span>Scroll</span>
+      <span class="h-10 w-px bg-white/60"></span>
+    </div>
+  </section>
+
+  <TrustStrip />
+
+  <!-- ===== INTRO / SERVICES ===== -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="grid items-end gap-10 md:grid-cols-[1.2fr_1fr]">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">What we do</p>
+          <h2 class="display-2 mt-4">
+            Five trades. <br />One careful crew.
+          </h2>
+        </div>
+        <p class="reveal text-base leading-relaxed md:text-lg">
+          We focus on the parts of a home that take the most weather and matter the most when
+          they fail. Every job is run by Mr. Hong personally, with the same long-tenured crew we've
+          had for fifteen-plus years.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          services.map((s, i) => (
+            <div class="reveal h-full" style={`transition-delay:${i * 60}ms`}>
+              <ServiceCard
+                title={s.data.title}
+                summary={s.data.summary.split(". ")[0] + "."}
+                href={`/services#${s.data.slug}`}
+                icon={s.data.icon}
+                number={String(i + 1).padStart(2, "0")}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS / WHY US ===== -->
+  <section class="section-y" style="background-color: var(--color-paper-deep);">
+    <div class="container-x">
+      <div class="grid items-start gap-16 md:grid-cols-2">
+        <div class="reveal">
+          <p class="eyebrow">How we work</p>
+          <h2 class="display-2 mt-4">
+            Old-school accountability,<br />done in a day.
+          </h2>
+          <p class="mt-5 text-base leading-relaxed">
+            We do business the way we'd want it done for us. We show up when we say. We clean up
+            before we leave. We tell you what your roof actually needs, not what the spreadsheet
+            says.
+          </p>
+          <a href="/about" class="link-underline mt-6 inline-block font-semibold">
+            Read our story &rarr;
+          </a>
+        </div>
+
+        <ol class="reveal space-y-8">
+          {
+            [
+              {
+                t: "Free, on-site inspection",
+                d: "Mr. Hong walks every roof himself. You get a clear, itemized written quote, with an honest opinion about whether you actually need a new roof yet.",
+              },
+              {
+                t: "Materials delivered next day",
+                d: "Once you accept, materials are on-site fast. We don't drag out timelines; most roofs are scheduled the same week.",
+              },
+              {
+                t: "Most installs in a single day",
+                d: "We bring extra crew when weather demands it. We've put complete tear-offs and new shingle installs to bed in 8 hours.",
+              },
+              {
+                t: "Spotless job site",
+                d: "We protect your landscaping, sweep magnets across the lawn for stray nails, and leave the property the way we found it.",
+              },
+            ].map((step, i) => (
+              <li class="flex gap-5">
+                <span
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-serif text-lg"
+                  style="background-color: var(--color-ink); color: white;"
+                >
+                  {i + 1}
+                </span>
+                <div>
+                  <h3 class="display-3 text-xl">{step.t}</h3>
+                  <p class="mt-1 text-sm leading-relaxed">{step.d}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY TEASER ===== -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="reveal max-w-xl">
+          <p class="eyebrow">Recent work</p>
+          <h2 class="display-2 mt-4">A few of our roofs &amp; exteriors.</h2>
+        </div>
+        <a href="/gallery" class="reveal link-underline self-end font-semibold">
+          See full gallery &rarr;
+        </a>
+      </div>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-3 md:grid-rows-2">
+        <a
+          href="/gallery"
+          class="reveal group relative col-span-1 row-span-2 overflow-hidden rounded-2xl md:col-span-2"
+        >
+          <Image
+            src={heroImage}
+            alt="Cedar-shingle cape with new architectural asphalt roof"
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            widths={[600, 1000, 1600]}
+            sizes="(max-width: 768px) 100vw, 66vw"
+          />
+          <span
+            class="absolute right-4 bottom-4 left-4 rounded-xl px-4 py-3 text-sm text-white backdrop-blur"
+            style="background-color: rgba(15,27,45,0.55);"
+          >
+            Cedar-shingle cape &middot; Full roof &amp; trim
+          </span>
+        </a>
+
+        <a href="/gallery" class="reveal group relative overflow-hidden rounded-2xl">
+          <Image
+            src={metalRoof}
+            alt="Standing-seam metal roof with skylights"
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+          <span
+            class="absolute right-3 bottom-3 left-3 rounded-xl px-3 py-2 text-xs text-white backdrop-blur"
+            style="background-color: rgba(15,27,45,0.55);"
+          >
+            Standing-seam metal &middot; Skylights
+          </span>
+        </a>
+
+        <a href="/gallery" class="reveal group relative overflow-hidden rounded-2xl">
+          <Image
+            src={windowsImg}
+            alt="Painted brick cottage with new black-clad replacement windows"
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+          <span
+            class="absolute right-3 bottom-3 left-3 rounded-xl px-3 py-2 text-xs text-white backdrop-blur"
+            style="background-color: rgba(15,27,45,0.55);"
+          >
+            Window replacement
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIAL ===== -->
+  <section class="section-y" style="background-color: var(--color-paper-deep);">
+    <div class="container-x">
+      <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.4fr]">
+        <div class="reveal">
+          <p class="eyebrow">What our customers say</p>
+          <h2 class="display-2 mt-4">5.0 stars,<br />three decades running.</h2>
+          <p class="mt-5 max-w-md leading-relaxed">
+            Most of our work comes from word of mouth, with neighbors recommending us to neighbors.
+            Here's some of what they've said.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="/reviews" class="btn btn-ghost text-xs">Read all reviews</a>
+            <a
+              href={site.rating.url}
+              target="_blank"
+              rel="noopener"
+              class="btn btn-primary text-xs"
+            >
+              See us on Google
+            </a>
+          </div>
+        </div>
+
+        <div class="grid gap-5">
+          {
+            featuredTestimonials.map((t) => (
+              <div class="reveal">
+                <Testimonial
+                  author={t.data.author}
+                  location={t.data.location}
+                  service={t.data.service}
+                  source={t.data.source}
+                  rating={t.data.rating}
+                >
+                  {t.body}
+                </Testimonial>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE AREA ===== -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="grid items-center gap-12 md:grid-cols-2">
+        <div
+          class="reveal relative overflow-hidden rounded-2xl"
+          style="aspect-ratio: 4/3; box-shadow: var(--shadow-card);"
+        >
+          <Image
+            src={crewRanch}
+            alt="J&Hong crew on a ranch home roof"
+            class="absolute inset-0 h-full w-full object-cover"
+            widths={[600, 1000, 1400]}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+        <div class="reveal">
+          <p class="eyebrow">Serving Anne Arundel County &amp; beyond</p>
+          <h2 class="display-2 mt-4">Based in Gambrills.<br />Working across Maryland.</h2>
+          <p class="mt-5 leading-relaxed">
+            We work all over Anne Arundel County and the surrounding region. If you're not sure
+            whether we cover your area, just call. Odds are we do.
+          </p>
+          <ul class="mt-7 flex flex-wrap gap-2">
+            {
+              site.serviceArea.map((c) => (
+                <li
+                  class="rounded-full px-4 py-1.5 text-xs font-medium"
+                  style="background-color: var(--color-paper-deep); color: var(--color-ink);"
+                >
+                  {c}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

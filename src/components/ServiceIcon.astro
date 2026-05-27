@@ -1,0 +1,116 @@
+---
+interface Props {
+  name: "roof" | "siding" | "gutter" | "skylight" | "window";
+  size?: number;
+  class?: string;
+}
+const { name, size = 28, class: cls = "" } = Astro.props;
+---
+
+{
+  name === "roof" && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class={cls}
+      aria-hidden="true"
+    >
+      <path d="M3 16 16 5l13 11" />
+      <path d="M6 14v13h20V14" />
+      <path d="M11 27v-8h10v8" />
+    </svg>
+  )
+}
+
+{
+  name === "siding" && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class={cls}
+      aria-hidden="true"
+    >
+      <rect x="4" y="6" width="24" height="20" rx="1" />
+      <path d="M4 11h24M4 16h24M4 21h24" />
+    </svg>
+  )
+}
+
+{
+  name === "gutter" && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class={cls}
+      aria-hidden="true"
+    >
+      <path d="M3 12 16 4l13 8" />
+      <path d="M4 14h24v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3z" />
+      <path d="M22 19v8M22 27h4" />
+    </svg>
+  )
+}
+
+{
+  name === "skylight" && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class={cls}
+      aria-hidden="true"
+    >
+      <path d="M3 18 16 6l13 12" />
+      <rect x="11" y="15" width="10" height="9" rx="1" />
+      <path d="M11 19h10" />
+    </svg>
+  )
+}
+
+{
+  name === "window" && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class={cls}
+      aria-hidden="true"
+    >
+      <rect x="5" y="5" width="22" height="22" rx="1" />
+      <path d="M16 5v22M5 16h22" />
+    </svg>
+  )
+}

@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import GalleryGrid from "../components/GalleryGrid.astro";
+import CTABanner from "../components/CTABanner.astro";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const categories = ["All", ...Array.from(new Set(projects.map((p) => p.data.category)))];
+
+// Pass plain shape to component
+const items = projects.map((p) => ({
+  title: p.data.title,
+  caption: p.data.caption,
+  category: p.data.category,
+  photo: p.data.photo,
+}));
+---
+
+<BaseLayout
+  title="Gallery"
+  description="Recent roofing, siding, skylight and window projects by J&Hong Construction across Maryland."
+>
+  <PageHero
+    eyebrow="Gallery"
+    title="The work,<br /><span style='color: var(--color-copper-soft);'>up close.</span>"
+    body="A few recent jobs from across Anne Arundel County. From cedar-shingle capes to standing-seam metal and full window replacements. Every roof, by hand, by us."
+  />
+
+  <section class="section-y">
+    <div class="container-x">
+      <div class="reveal mb-10 flex flex-wrap items-center gap-2">
+        {
+          categories.map((c, i) => (
+            <button
+              type="button"
+              data-filter={c}
+              class={`rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.12em] uppercase transition-colors ${i === 0 ? "is-active" : ""}`}
+              style="border-color: var(--color-line);"
+            >
+              {c}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="reveal">
+        <GalleryGrid projects={items} />
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="See something you like?"
+    body="Tell us about your project. We'll come out, take a look, and put together an honest, itemized quote."
+    variant="light"
+  />
+</BaseLayout>
+
+<style>
+  [data-filter] {
+    color: var(--color-slate);
+  }
+  [data-filter]:hover {
+    background-color: var(--color-paper-deep);
+  }
+  [data-filter].is-active {
+    background-color: var(--color-ink);
+    color: white;
+    border-color: var(--color-ink);
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const items = document.querySelectorAll<HTMLElement>("[data-gallery-item]");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const cat = btn.dataset.filter;
+      buttons.forEach((b) => b.classList.toggle("is-active", b === btn));
+      items.forEach((item) => {
+        const match = cat === "All" || item.dataset.category === cat;
+        item.style.display = match ? "" : "none";
+      });
+    });
+  });
+</script>

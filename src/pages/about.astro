@@ -1,0 +1,222 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CTABanner from "../components/CTABanner.astro";
+import crewRanch from "../assets/photos/jandhong-crew-roof-ranch.png";
+import crewCape from "../assets/photos/jandhong-crew-roof-cape.png";
+import heroHouse from "../assets/photos/jandhong-hero-house.png";
+import { site } from "../../site.config";
+
+const yearsActive = new Date().getFullYear() - site.founded;
+
+const values = [
+  {
+    title: "Same crew, every job",
+    body: "Mr. Hong's been working with the same core crew for over fifteen years. They know each other, they know the work, and they finish what they start.",
+  },
+  {
+    title: "Honest quotes",
+    body: "We tell you what your roof actually needs, not the most we can sell you. Itemized, in writing, every time.",
+  },
+  {
+    title: "Speed without shortcuts",
+    body: "Most tear-offs and roof replacements happen in a single day. We bring extra crew when weather demands it. The details still get done right.",
+  },
+  {
+    title: "Word of mouth",
+    body: "Most of our work comes from past customers and the neighbors they tell. That's the way we like it, and the way it stays.",
+  },
+];
+
+const milestones = [
+  { year: 1998, label: "Mr. Hong founds J&Hong Construction in Gambrills, MD." },
+  { year: 2005, label: "Same core crew assembled; many of them still on the job today." },
+  { year: 2012, label: "Expanded into siding, windows, skylights, and gutter systems." },
+  {
+    year: new Date().getFullYear(),
+    label: `${yearsActive} years of 5-star service across Anne Arundel County and beyond.`,
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description={`J&Hong Construction is a family-run roofing and exteriors company founded in ${site.founded} in Gambrills, MD. Same owner, same crew, same standards.`}
+>
+  <PageHero
+    eyebrow={`Since ${site.founded}`}
+    title="Family-run.<br />Built on referrals."
+    body={`For over ${yearsActive} years, J&Hong Construction has been the roofer Maryland homeowners call back and tell their neighbors about.`}
+  />
+
+  <!-- ===== Story ===== -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="grid items-start gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
+        <div class="reveal max-w-prose">
+          <p class="eyebrow">Our story</p>
+          <h2 class="display-2 mt-4">
+            Three decades of doing it the way it should be done.
+          </h2>
+          <div
+            class="mt-6 space-y-5 text-base leading-relaxed md:text-lg"
+            style="color: var(--color-slate);"
+          >
+            <p>
+              J&amp;Hong Construction was founded in {site.founded} by Mr. Hong, who still personally
+              walks every roof and meets every customer. There is no sales team, no commissioned
+              estimator, no franchise overhead. Just the same family-run company that's been doing
+              this work for over {yearsActive} years.
+            </p>
+            <p>
+              The crew has been together for more than fifteen years. They've put on thousands of
+              roofs. They know each other's rhythms, and that's why a full tear-off and
+              installation that takes most contractors three or four days, our team gets done in
+              one.
+            </p>
+            <p>
+              We don't run flashy ads or push expensive upgrades. We bring better-grade materials,
+              we charge a fair price, and we leave your property cleaner than we found it. The
+              result is what we've always wanted: customers who call us back, and neighbors who
+              call us next.
+            </p>
+          </div>
+        </div>
+
+        <div class="reveal grid gap-4">
+          <div class="overflow-hidden rounded-2xl" style="box-shadow: var(--shadow-card);">
+            <Image
+              src={crewRanch}
+              alt="Mr. Hong's crew installing a new roof on a Maryland ranch home"
+              class="h-full w-full object-cover"
+              widths={[600, 900, 1200]}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="overflow-hidden rounded-2xl">
+              <Image
+                src={crewCape}
+                alt="Crew working on a Cape Cod home roof"
+                class="h-full w-full object-cover"
+                widths={[300, 500, 700]}
+                sizes="25vw"
+              />
+            </div>
+            <div class="overflow-hidden rounded-2xl">
+              <Image
+                src={heroHouse}
+                alt="Finished cedar-shingle house with new roof"
+                class="h-full w-full object-cover"
+                widths={[300, 500, 700]}
+                sizes="25vw"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Values ===== -->
+  <section class="section-y" style="background-color: var(--color-paper-deep);">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">What we believe</p>
+        <h2 class="display-2 mt-4">How we run a job site.</h2>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          values.map((v, i) => (
+            <div
+              class="reveal flex h-full flex-col gap-3 rounded-2xl bg-white p-7"
+              style={`box-shadow: var(--shadow-soft); transition-delay: ${i * 60}ms;`}
+            >
+              <span
+                class="font-serif text-2xl"
+                style="color: var(--color-copper-deep);"
+              >{String(i + 1).padStart(2, "0")}</span>
+              <h3 class="display-3 text-xl">{v.title}</h3>
+              <p class="text-sm leading-relaxed">{v.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Timeline ===== -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Milestones</p>
+        <h2 class="display-2 mt-4">A short timeline.</h2>
+      </div>
+      <ol class="mt-14 grid gap-6 md:grid-cols-4">
+        {
+          milestones.map((m, i) => (
+            <li
+              class="reveal relative flex flex-col gap-3 pt-8"
+              style={`transition-delay: ${i * 60}ms;`}
+            >
+              <span
+                class="absolute top-0 left-0 h-1 w-12 rounded-full"
+                style="background-color: var(--color-copper);"
+              />
+              <p class="font-serif text-4xl leading-none">{m.year}</p>
+              <p class="text-sm leading-relaxed">{m.label}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Credentials ===== -->
+  <section class="section-y" style="background-color: var(--color-ink); color: white;">
+    <div class="container-x">
+      <div class="grid items-center gap-12 md:grid-cols-2">
+        <div class="reveal">
+          <p class="eyebrow" style="color: var(--color-copper-soft);">Licensed &amp; insured</p>
+          <h2 class="display-2 mt-4" style="color: white;">
+            Built to be the company you call back.
+          </h2>
+          <p class="mt-5 max-w-md text-base leading-relaxed text-white/80">
+            Every job we run is backed by an active Maryland Home Improvement Commission license,
+            general liability insurance, and a commitment to leave your home better than we found
+            it.
+          </p>
+        </div>
+        <dl
+          class="reveal grid gap-6 rounded-2xl p-7 sm:grid-cols-2"
+          style="background-color: var(--color-ink-soft);"
+        >
+          <div>
+            <dt class="text-xs tracking-[0.16em] uppercase opacity-65">License Authority</dt>
+            <dd class="mt-1 font-serif text-lg">{site.license.authority}</dd>
+          </div>
+          <div>
+            <dt class="text-xs tracking-[0.16em] uppercase opacity-65">License #</dt>
+            <dd class="mt-1 font-serif text-lg">{site.license.number}</dd>
+          </div>
+          <div>
+            <dt class="text-xs tracking-[0.16em] uppercase opacity-65">Founded</dt>
+            <dd class="mt-1 font-serif text-lg">{site.founded}</dd>
+          </div>
+          <div>
+            <dt class="text-xs tracking-[0.16em] uppercase opacity-65">Based In</dt>
+            <dd class="mt-1 font-serif text-lg">
+              {site.address.city}, {site.address.state}
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Want to meet the crew on your roof?"
+    body="Mr. Hong personally inspects every job and gives every estimate. No sales team, no pressure. Just an honest look at what you need."
+  />
+</BaseLayout>

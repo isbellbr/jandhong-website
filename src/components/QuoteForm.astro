@@ -1,0 +1,236 @@
+---
+import { site } from "../../site.config";
+
+const services = ["Roofing", "Siding", "Gutters & Flashing", "Skylights", "Windows", "Other"];
+---
+
+<form
+  id="quote-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="grid gap-5"
+  novalidate
+>
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input
+    type="hidden"
+    name="subject"
+    value="New free-estimate request — J&Hong Construction website"
+  />
+  <input type="hidden" name="from_name" value="J&Hong Construction Website" />
+  <input type="hidden" name="redirect" value={`${site.url}/contact?sent=1`} />
+  <!-- Honeypot — bots fill this, humans don't see it -->
+  <input
+    type="checkbox"
+    name="botcheck"
+    tabindex="-1"
+    autocomplete="off"
+    class="absolute -left-[9999px]"
+    aria-hidden="true"
+  />
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <label class="block">
+      <span class="text-xs font-semibold tracking-wide uppercase opacity-70">Name</span>
+      <input
+        type="text"
+        name="name"
+        required
+        autocomplete="name"
+        class="form-input mt-1.5"
+        placeholder="Your full name"
+      />
+    </label>
+    <label class="block">
+      <span class="text-xs font-semibold tracking-wide uppercase opacity-70">Phone</span>
+      <input
+        type="tel"
+        name="phone"
+        required
+        autocomplete="tel"
+        class="form-input mt-1.5"
+        placeholder="(410) 555-1234"
+      />
+    </label>
+  </div>
+
+  <label class="block">
+    <span class="text-xs font-semibold tracking-wide uppercase opacity-70">Email</span>
+    <input
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      class="form-input mt-1.5"
+      placeholder="you@example.com"
+    />
+  </label>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <label class="block">
+      <span class="text-xs font-semibold tracking-wide uppercase opacity-70">
+        Service needed
+      </span>
+      <select name="service" class="form-input mt-1.5" required data-service-select>
+        <option value="" disabled selected>Choose a service…</option>
+        {services.map((s) => <option value={s}>{s}</option>)}
+      </select>
+    </label>
+    <label class="block">
+      <span class="text-xs font-semibold tracking-wide uppercase opacity-70">
+        Service address city
+      </span>
+      <input
+        type="text"
+        name="city"
+        autocomplete="address-level2"
+        class="form-input mt-1.5"
+        placeholder="Gambrills, Annapolis, …"
+      />
+    </label>
+  </div>
+
+  <label class="block">
+    <span class="text-xs font-semibold tracking-wide uppercase opacity-70">
+      Tell us about the project
+    </span>
+    <textarea
+      name="message"
+      rows="5"
+      class="form-input mt-1.5 resize-y"
+      placeholder="Roof age, recent leaks, any deadlines, anything else we should know…"></textarea>
+  </label>
+
+  <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+    <p class="text-xs opacity-60">
+      We typically respond within one business day. No spam, no upsells. Promise.
+    </p>
+    <button type="submit" class="btn btn-primary" data-submit>
+      <span data-label>Request my free estimate</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <div
+    role="status"
+    aria-live="polite"
+    class="hidden rounded-xl border p-4 text-sm"
+    data-form-message
+  >
+  </div>
+</form>
+
+<style>
+  @reference "../styles/global.css";
+
+  .form-input {
+    @apply block w-full rounded-xl border px-4 py-3 text-base outline-none transition-colors;
+    background-color: white;
+    border-color: var(--color-line);
+    color: var(--color-ink);
+  }
+  .form-input:focus {
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 4px rgba(15, 27, 45, 0.08);
+  }
+  .form-input::placeholder {
+    color: rgba(58, 71, 86, 0.5);
+  }
+  select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230F1B2D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.75rem;
+  }
+</style>
+
+<script>
+  const form = document.getElementById("quote-form") as HTMLFormElement | null;
+  if (form) {
+    const message = form.querySelector<HTMLElement>("[data-form-message]")!;
+    const submit = form.querySelector<HTMLButtonElement>("[data-submit]")!;
+    const label = submit.querySelector<HTMLElement>("[data-label]")!;
+    const select = form.querySelector<HTMLSelectElement>("[data-service-select]")!;
+
+    // Pre-fill service from URL ?service=Roofing or ?sent=1
+    const params = new URLSearchParams(window.location.search);
+    const presetService = params.get("service");
+    if (presetService && select) {
+      for (const opt of select.options) {
+        if (opt.value === presetService) {
+          select.value = presetService;
+          break;
+        }
+      }
+    }
+    if (params.get("sent") === "1") {
+      message.textContent =
+        "Thanks, we got it. Mr. Hong or someone on the crew will reach out shortly.";
+      message.classList.remove("hidden");
+      message.style.borderColor = "var(--color-leaf)";
+      message.style.color = "var(--color-leaf)";
+      message.style.backgroundColor = "rgba(47, 111, 79, 0.08)";
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      // Honeypot
+      const botField = form.querySelector<HTMLInputElement>('input[name="botcheck"]');
+      if (botField?.checked) return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submit.disabled = true;
+      label.textContent = "Sending…";
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json().catch(() => ({ success: false }));
+        if (res.ok && data.success) {
+          message.textContent =
+            "Thanks, we got it. Mr. Hong or someone on the crew will reach out shortly.";
+          message.classList.remove("hidden");
+          message.style.borderColor = "var(--color-leaf)";
+          message.style.color = "var(--color-leaf)";
+          message.style.backgroundColor = "rgba(47, 111, 79, 0.08)";
+          form.reset();
+        } else {
+          throw new Error(data.message ?? "Submission failed");
+        }
+      } catch (err) {
+        message.textContent = `Something went wrong on our end. Please call us directly at ${
+          (window as any).__JANDHONG_PHONE__ ?? "(410) 714-4664"
+        }.`;
+        message.classList.remove("hidden");
+        message.style.borderColor = "#b8431d";
+        message.style.color = "#7a2a0e";
+        message.style.backgroundColor = "rgba(184, 67, 29, 0.08)";
+      } finally {
+        submit.disabled = false;
+        label.textContent = "Request my free estimate";
+      }
+    });
+  }
+</script>

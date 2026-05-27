@@ -1,0 +1,130 @@
+---
+import { SEO as AstroSEO } from "astro-seo";
+import { site } from "../../site.config";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Path-only OG image (relative to site root) */
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = site.description,
+  image = "/og-image.jpg",
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const ogImage = new URL(image, site.url).toString();
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "RoofingContractor",
+  "@id": `${site.url}#business`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  telephone: site.phone.tel,
+  email: site.email,
+  description: site.description,
+  foundingDate: String(site.founded),
+  image: ogImage,
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.zip,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  areaServed: site.serviceArea.map((s) => ({ "@type": "City", name: s })),
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "07:00",
+      closes: "18:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Saturday",
+      opens: "08:00",
+      closes: "14:00",
+    },
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: site.rating.score,
+    reviewCount: site.rating.count,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "license",
+    name: `${site.license.authority} License #${site.license.number}`,
+  },
+  makesOffer: [
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Roof Replacement" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Roof Repair" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Siding Installation" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gutters & Flashing" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Skylight Installation" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Window Replacement" } },
+  ],
+};
+---
+
+<AstroSEO
+  title={fullTitle}
+  description={description}
+  canonical={canonical}
+  noindex={noindex}
+  openGraph={{
+    basic: {
+      title: fullTitle,
+      type: "website",
+      image: ogImage,
+      url: canonical,
+    },
+    optional: {
+      description,
+      siteName: site.name,
+      locale: "en_US",
+    },
+    image: {
+      alt: `${site.name} | ${site.tagline}`,
+    },
+  }}
+  twitter={{
+    card: "summary_large_image",
+    title: fullTitle,
+    description,
+    image: ogImage,
+  }}
+  extend={{
+    link: [
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+    ],
+    meta: [
+      { name: "theme-color", content: "#0F1B2D" },
+      { name: "format-detection", content: "telephone=yes" },
+      { name: "geo.region", content: "US-MD" },
+      { name: "geo.placename", content: "Gambrills" },
+      { name: "geo.position", content: `${site.geo.latitude};${site.geo.longitude}` },
+    ],
+  }}
+/>
+
+<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} is:inline />

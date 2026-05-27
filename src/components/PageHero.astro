@@ -1,0 +1,32 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  body?: string;
+}
+const { eyebrow, title, body } = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden pt-32 pb-16 text-white md:pt-44 md:pb-24"
+  style="background-color: var(--color-ink);"
+>
+  <div
+    class="absolute inset-0 -z-10 opacity-[0.35]"
+    style="background-image: radial-gradient(circle at 80% 0%, var(--color-copper) 0%, transparent 45%), radial-gradient(circle at 0% 100%, #1a2b44 0%, transparent 55%);"
+  >
+  </div>
+  <div class="container-x">
+    <p class="eyebrow reveal" style="color: var(--color-copper-soft);">{eyebrow}</p>
+    <h1 class="display-1 reveal mt-4 max-w-3xl" style="color: white;">
+      <Fragment set:html={title} />
+    </h1>
+    {
+      body && (
+        <p class="reveal mt-6 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
+          {body}
+        </p>
+      )
+    }
+  </div>
+</section>

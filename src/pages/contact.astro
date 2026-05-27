@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import QuoteForm from "../components/QuoteForm.astro";
+import { site } from "../../site.config";
+
+const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
+  `${site.address.city}, ${site.address.state} ${site.address.zip}`,
+)}&output=embed`;
+---
+
+<BaseLayout
+  title="Contact / Free Estimate"
+  description="Request a free roofing, siding, or window estimate from J&Hong Construction in Gambrills, MD. Same-week response, no pressure."
+>
+  <PageHero
+    eyebrow="Free estimate"
+    title="Tell us about your project."
+    body="A quick form gets the ball rolling. Usually we'll respond within a business day. Prefer to talk? Mr. Hong's number is on this page."
+  />
+
+  <section class="section-y">
+    <div class="container-x">
+      <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+        <!-- ===== Form ===== -->
+        <div class="reveal">
+          <div
+            class="rounded-2xl p-7 md:p-10"
+            style="background-color: white; box-shadow: var(--shadow-card);"
+          >
+            <h2 class="display-3">Request a free estimate</h2>
+            <p class="mt-2 text-sm leading-relaxed opacity-70">
+              Required fields are marked. The more detail you share, the more accurate our quote.
+            </p>
+            <div class="mt-7">
+              <QuoteForm />
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== Sidebar — direct contact ===== -->
+        <aside class="reveal flex flex-col gap-6">
+          <div
+            class="rounded-2xl p-7"
+            style="background-color: var(--color-ink); color: white; box-shadow: var(--shadow-card);"
+          >
+            <h3 class="font-serif text-xl">Or get us on the phone</h3>
+            <p class="mt-2 text-sm opacity-80">
+              We answer the phone. If we can't, we call back. Same day, every time.
+            </p>
+            <a
+              href={`tel:${site.phone.tel}`}
+              class="mt-5 inline-flex items-center gap-3 font-serif text-2xl md:text-3xl"
+              style="color: var(--color-copper-soft);"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                ></path>
+              </svg>
+              {site.phone.display}
+            </a>
+            <div class="mt-6 space-y-2 text-sm opacity-85">
+              <p>
+                <a href={`mailto:${site.email}`} class="hover:text-white">{site.email}</a>
+              </p>
+              <p>
+                {site.address.street}<br />
+                {site.address.city}, {site.address.state}
+                {site.address.zip}
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="rounded-2xl p-7"
+            style="background-color: var(--color-paper-deep);"
+          >
+            <h3 class="font-serif text-xl">Business hours</h3>
+            <ul class="mt-4 space-y-2 text-sm">
+              {
+                site.hours.map((h) => (
+                  <li class="flex justify-between gap-3">
+                    <span class="opacity-70">{h.day}</span>
+                    <span class="font-medium">{h.time}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="rounded-2xl p-7" style="background-color: var(--color-paper-deep);">
+            <h3 class="font-serif text-xl">Service area</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {
+                site.serviceArea.map((c) => (
+                  <li
+                    class="rounded-full bg-white px-3 py-1 text-xs font-medium"
+                    style="color: var(--color-ink);"
+                  >
+                    {c}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Map ===== -->
+  <section class="pb-20">
+    <div class="container-x">
+      <div
+        class="reveal overflow-hidden rounded-2xl"
+        style="box-shadow: var(--shadow-card); aspect-ratio: 16/7;"
+      >
+        <iframe
+          title={`Map of ${site.address.city}, ${site.address.state}`}
+          src={mapEmbed}
+          width="100%"
+          height="100%"
+          style="border:0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

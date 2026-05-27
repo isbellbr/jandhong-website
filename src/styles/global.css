@@ -1,0 +1,215 @@
+@import "tailwindcss";
+/* Only load the latin subset — saves ~150KB of font payload */
+@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/fraunces/wght.css";
+
+/* ---------- Design tokens (single source of truth) ---------- */
+@theme {
+  /* Type */
+  --font-sans:
+    "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --font-serif: "Fraunces Variable", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Palette */
+  --color-ink: #0f1b2d; /* deep navy — primary surface, headers */
+  --color-ink-soft: #1a2b44; /* navy variant for cards on dark */
+  --color-slate: #3a4756; /* body copy */
+  --color-slate-soft: #6b7785; /* muted text */
+  --color-line: #e6dfd2; /* divider on light */
+  --color-line-dark: #25324a; /* divider on dark */
+  --color-paper: #f7f4ee; /* warm white background */
+  --color-paper-deep: #efe9dc; /* alternating section bg */
+  --color-copper: #b87333; /* primary CTA accent */
+  --color-copper-soft: #d99662; /* hover */
+  --color-copper-deep: #8e5826; /* active/pressed */
+  --color-leaf: #2f6f4f; /* success / star color */
+
+  /* Shadows */
+  --shadow-soft: 0 1px 2px rgba(15, 27, 45, 0.05), 0 8px 24px rgba(15, 27, 45, 0.06);
+  --shadow-card: 0 1px 2px rgba(15, 27, 45, 0.06), 0 24px 48px -16px rgba(15, 27, 45, 0.18);
+  --shadow-cta: 0 8px 24px -8px rgba(184, 115, 51, 0.55);
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Layout */
+  --container-prose: 68ch;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  :root {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    font-feature-settings:
+      "ss01" on,
+      "cv11" on;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+    font-feature-settings:
+      "ss01" on,
+      "ss03" on;
+  }
+
+  ::selection {
+    background-color: var(--color-copper);
+    color: white;
+  }
+
+  /* Accessible focus visible */
+  :focus-visible {
+    outline: 2px solid var(--color-copper);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* ---------- Reusable component primitives ---------- */
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply font-sans text-xs font-semibold tracking-[0.18em] uppercase;
+    color: var(--color-copper-deep);
+  }
+
+  .display-1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5.5vw + 1rem, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+
+  .display-2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.5vw + 1rem, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .display-3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 1.5vw + 1rem, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200;
+    will-change: transform;
+  }
+
+  .btn-primary {
+    background-color: var(--color-copper);
+    color: white;
+    box-shadow: var(--shadow-cta);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-copper-soft);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    background-color: var(--color-copper-deep);
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    @apply border;
+    background-color: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    background-color: var(--color-ink);
+    color: white;
+  }
+
+  .btn-ghost-inverse {
+    @apply border;
+    background-color: transparent;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .btn-ghost-inverse:hover {
+    background-color: white;
+    color: var(--color-ink);
+    border-color: white;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+  }
+  .link-underline:hover {
+    background-size: 0% 1px;
+  }
+
+  .card {
+    @apply rounded-2xl;
+    background-color: white;
+    box-shadow: var(--shadow-card);
+  }
+
+  .section-y {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

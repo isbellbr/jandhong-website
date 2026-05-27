@@ -1,0 +1,119 @@
+---
+import { site } from "../../site.config";
+
+const year = new Date().getFullYear();
+const services = [
+  { label: "Roofing", href: "/services#roofing" },
+  { label: "Siding", href: "/services#siding" },
+  { label: "Gutters & Flashing", href: "/services#gutters" },
+  { label: "Skylights", href: "/services#skylights" },
+  { label: "Windows", href: "/services#windows" },
+];
+---
+
+<footer
+  class="relative overflow-hidden text-[color:var(--color-paper)]"
+  style="background-color: var(--color-ink);"
+>
+  <div class="container-x relative section-y">
+    <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <div>
+        <a href="/" class="inline-flex items-baseline gap-2">
+          <span class="font-serif text-3xl text-white">
+            J<span style="color: var(--color-copper-soft);">&amp;</span>Hong
+          </span>
+          <span class="text-xs font-medium tracking-[0.2em] uppercase opacity-70">
+            Construction
+          </span>
+        </a>
+        <p class="mt-5 max-w-sm text-base leading-relaxed opacity-80">
+          Family-run roofing, siding, and exterior craftsmanship in Maryland since {site.founded}.
+          Same owner. Same crew. Same standards.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/contact" class="btn btn-primary text-xs">Get a Free Estimate</a>
+          <a
+            href={`tel:${site.phone.tel}`}
+            class="btn btn-ghost-inverse text-xs"
+            aria-label={`Call ${site.phone.display}`}
+          >
+            {site.phone.display}
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold tracking-[0.18em] text-white/60 uppercase">Services</h3>
+        <ul class="mt-5 space-y-3 text-sm">
+          {
+            services.map((s) => (
+              <li>
+                <a href={s.href} class="opacity-85 hover:text-white hover:opacity-100">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold tracking-[0.18em] text-white/60 uppercase">Company</h3>
+        <ul class="mt-5 space-y-3 text-sm">
+          <li>
+            <a href="/about" class="opacity-85 hover:text-white hover:opacity-100">About</a>
+          </li>
+          <li>
+            <a href="/gallery" class="opacity-85 hover:text-white hover:opacity-100">Gallery</a>
+          </li>
+          <li>
+            <a href="/reviews" class="opacity-85 hover:text-white hover:opacity-100">Reviews</a>
+          </li>
+          <li>
+            <a href="/contact" class="opacity-85 hover:text-white hover:opacity-100">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold tracking-[0.18em] text-white/60 uppercase">Visit / Call</h3>
+        <address class="mt-5 space-y-3 text-sm not-italic opacity-85">
+          <div>
+            {site.address.street}<br />
+            {site.address.city}, {site.address.state}
+            {site.address.zip}
+          </div>
+          <div>
+            <a href={`tel:${site.phone.tel}`} class="hover:text-white">{site.phone.display}</a>
+          </div>
+          <div>
+            <a href={`mailto:${site.email}`} class="break-all hover:text-white">{site.email}</a>
+          </div>
+        </address>
+        <ul class="mt-5 space-y-1 text-xs opacity-70">
+          {
+            site.hours.map((h) => (
+              <li class="flex justify-between gap-3">
+                <span>{h.day}</span>
+                <span>{h.time}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-16 flex flex-col gap-4 border-t pt-8 text-xs opacity-70 md:flex-row md:items-center md:justify-between"
+      style="border-color: var(--color-line-dark);"
+    >
+      <div>
+        &copy; {year}
+        {site.legalName} &middot; {site.license.authority} License #{site.license.number}
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Serving {site.address.city} &amp; all of Anne Arundel County</span>
+      </div>
+    </div>
+  </div>
+</footer>

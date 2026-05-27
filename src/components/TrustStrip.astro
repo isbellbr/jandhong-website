@@ -1,0 +1,43 @@
+---
+import { site } from "../../site.config";
+
+const yearsActive = new Date().getFullYear() - site.founded;
+
+const stats = [
+  { value: `${yearsActive}+`, label: "Years in Business" },
+  { value: "5.0★", label: "Google Rating" },
+  { value: "#" + site.license.number, label: "MD HIC License" },
+  { value: "1-Day", label: "Most Roof Installs" },
+];
+---
+
+<section
+  class="relative isolate overflow-hidden"
+  style="background-color: var(--color-ink); color: white;"
+>
+  <div class="container-x py-12 md:py-16">
+    <div class="grid items-center gap-10 md:grid-cols-[1.2fr_1fr]">
+      <div class="flex items-center gap-4">
+        <p class="text-sm leading-relaxed opacity-85">
+          Family-owned since {site.founded}. Same owner, same crew, same standards. Three
+          generations of Maryland homeowners trust us with their roofs.
+        </p>
+      </div>
+      <dl
+        class="grid grid-cols-2 gap-x-8 gap-y-6 border-t pt-8 md:grid-cols-4 md:border-t-0 md:border-l md:pt-0 md:pl-10"
+        style="border-color: var(--color-line-dark);"
+      >
+        {
+          stats.map((s) => (
+            <div>
+              <dt class="font-serif text-2xl leading-none md:text-3xl">{s.value}</dt>
+              <dd class="mt-1.5 text-[11px] font-medium tracking-[0.16em] uppercase opacity-65">
+                {s.label}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

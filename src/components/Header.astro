@@ -1,0 +1,264 @@
+---
+import { site } from "../../site.config";
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  data-state="top"
+>
+  <div class="container-x">
+    <nav
+      aria-label="Primary"
+      class="mt-3 flex items-center justify-between rounded-full border border-transparent bg-white/0 px-4 py-2 backdrop-blur-0 transition-all duration-300 sm:px-6"
+      data-nav
+    >
+      <a href="/" class="group flex items-center gap-2.5" aria-label={`${site.name} home`}>
+        <span
+          class="font-serif text-2xl tracking-tight transition-colors duration-300"
+          data-logo-text
+        >
+          J<span style="color: var(--color-copper);">&amp;</span>Hong
+        </span>
+        <span
+          class="hidden text-xs font-medium tracking-[0.18em] uppercase opacity-70 sm:inline"
+          data-logo-tag
+        >
+          Construction
+        </span>
+      </a>
+
+      <ul class="hidden items-center gap-1 md:flex">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200"
+                aria-current={isActive(item.href) ? "page" : undefined}
+                data-nav-link
+                data-active={isActive(item.href) ? "true" : "false"}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <a
+          href={`tel:${site.phone.tel}`}
+          class="hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-medium md:inline-flex"
+          data-nav-link
+          aria-label={`Call ${site.name}`}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+            ></path>
+          </svg>
+          {site.phone.display}
+        </a>
+        <a href="/contact" class="btn btn-primary hidden text-xs md:inline-flex"> Free Estimate </a>
+
+        <button
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full md:hidden"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          data-menu-toggle
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            data-icon-menu
+          >
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="hidden"
+            data-icon-close
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="invisible fixed inset-x-0 top-[5rem] z-40 origin-top scale-y-95 opacity-0 transition-all duration-300 md:hidden"
+    data-mobile-menu
+  >
+    <div class="container-x">
+      <div class="card overflow-hidden p-3">
+        <ul class="flex flex-col">
+          {
+            site.nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium text-[color:var(--color-ink)] hover:bg-[color:var(--color-paper-deep)]"
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-3 grid grid-cols-2 gap-2 border-t border-[color:var(--color-line)] pt-3">
+          <a
+            href={`tel:${site.phone.tel}`}
+            class="btn btn-ghost text-xs"
+            aria-label={`Call ${site.name}`}
+          >
+            Call
+          </a>
+          <a href="/contact" class="btn btn-primary text-xs"> Free Estimate </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Top state — transparent pill nav over hero */
+  header[data-state="top"] [data-nav] {
+    background-color: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+  }
+  header[data-state="top"] [data-nav-link],
+  header[data-state="top"] [data-logo-text],
+  header[data-state="top"] [data-logo-tag] {
+    color: white;
+  }
+  header[data-state="top"] [data-nav-link]:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+  header[data-state="top"] [data-nav-link][data-active="true"] {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Scrolled state — solid pill */
+  header[data-state="scrolled"] [data-nav] {
+    background-color: rgba(247, 244, 238, 0.92);
+    border-color: var(--color-line);
+    backdrop-filter: saturate(140%) blur(16px);
+    box-shadow: var(--shadow-soft);
+  }
+  header[data-state="scrolled"] [data-nav-link],
+  header[data-state="scrolled"] [data-logo-text],
+  header[data-state="scrolled"] [data-logo-tag] {
+    color: var(--color-ink);
+  }
+  header[data-state="scrolled"] [data-nav-link]:hover {
+    background-color: rgba(15, 27, 45, 0.06);
+  }
+  header[data-state="scrolled"] [data-nav-link][data-active="true"] {
+    background-color: var(--color-ink);
+    color: white;
+  }
+
+  /* Mobile menu open */
+  [data-mobile-menu].is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+</style>
+
+<script>
+  const header = document.getElementById("site-header");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+  const iconMenu = document.querySelector<HTMLElement>("[data-icon-menu]");
+  const iconClose = document.querySelector<HTMLElement>("[data-icon-close]");
+
+  // Scroll state — switch between transparent (over hero) and solid
+  const setState = () => {
+    if (!header) return;
+    header.dataset.state = window.scrollY > 16 ? "scrolled" : "top";
+  };
+  setState();
+  window.addEventListener("scroll", setState, { passive: true });
+
+  // Mobile menu
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      const willOpen = !menu.classList.contains("is-open");
+      menu.classList.toggle("is-open", willOpen);
+      toggle.setAttribute("aria-expanded", String(willOpen));
+      toggle.setAttribute("aria-label", willOpen ? "Close menu" : "Open menu");
+      iconMenu?.classList.toggle("hidden", willOpen);
+      iconClose?.classList.toggle("hidden", !willOpen);
+    });
+
+    // Close on Escape and on nav-link click
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.classList.contains("is-open")) {
+        toggle.click();
+      }
+    });
+    menu.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("a") && menu.classList.contains("is-open")) {
+        toggle.click();
+      }
+    });
+  }
+</script>

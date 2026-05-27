@@ -1,0 +1,35 @@
+---
+import Stars from "./Stars.astro";
+
+interface Props {
+  author: string;
+  location?: string;
+  service?: string;
+  source?: string;
+  rating?: number;
+  large?: boolean;
+}
+const { author, location, service, source, rating = 5, large = false } = Astro.props;
+---
+
+<figure
+  class={`flex flex-col gap-5 rounded-2xl p-7 md:p-8 ${large ? "md:p-12" : ""}`}
+  style="background-color: white; box-shadow: var(--shadow-soft); border: 1px solid var(--color-line);"
+>
+  <Stars count={rating} size={large ? 22 : 18} class="text-[color:var(--color-copper)]" />
+  <blockquote
+    class={`font-serif text-[color:var(--color-ink)] ${large ? "text-2xl leading-snug md:text-3xl" : "text-lg leading-snug md:text-xl"}`}
+  >
+    <span aria-hidden="true">“</span><slot /><span aria-hidden="true">”</span>
+  </blockquote>
+  <figcaption class="mt-2 flex flex-wrap items-baseline justify-between gap-3 text-sm">
+    <span class="font-sans font-semibold text-[color:var(--color-ink)]">
+      {author}{location && <span class="font-normal opacity-60"> &middot; {location}</span>}
+    </span>
+    <span class="text-xs tracking-wide opacity-60">
+      {service && <span>{service}</span>}
+      {service && source && <span aria-hidden="true"> &middot; </span>}
+      {source && <span>via {source}</span>}
+    </span>
+  </figcaption>
+</figure>

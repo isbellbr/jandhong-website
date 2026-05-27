@@ -1,0 +1,135 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ServiceIcon from "../components/ServiceIcon.astro";
+import CTABanner from "../components/CTABanner.astro";
+import { site } from "../../site.config";
+
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Services"
+  description="Roofing, siding, gutters, skylights and window installation in Gambrills, MD and Anne Arundel County. Free estimates."
+>
+  <PageHero
+    eyebrow="Services"
+    title="Five trades.<br />Done by the same crew, for over <span style='color: var(--color-copper-soft);'>27 years</span>."
+    body="A focused roster of exterior services, done at a level we'd put on our own homes. Every job is supervised personally by Mr. Hong."
+  />
+
+  <!-- Anchor nav -->
+  <nav
+    class="sticky top-20 z-30 -mt-px border-y backdrop-blur"
+    style="background-color: rgba(247,244,238,0.85); border-color: var(--color-line);"
+    aria-label="Services on this page"
+  >
+    <div class="container-x">
+      <ul class="-mx-2 flex gap-1 overflow-x-auto py-3 text-sm whitespace-nowrap">
+        {
+          services.map((s) => (
+            <li>
+              <a
+                href={`#${s.data.slug}`}
+                class="flex items-center gap-2 rounded-full px-4 py-2 font-medium text-[color:var(--color-ink)] transition-colors hover:bg-[color:var(--color-paper-deep)]"
+              >
+                <ServiceIcon name={s.data.icon} size={16} />
+                {s.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </nav>
+
+  {
+    services.map((s, i) => (
+      <section
+        id={s.data.slug}
+        class="section-y scroll-mt-32"
+        style={i % 2 === 1 ? "background-color: var(--color-paper-deep);" : ""}
+      >
+        <div class="container-x">
+          <div
+            class={`grid items-center gap-12 lg:gap-20 ${i % 2 === 1 ? "lg:grid-cols-[1fr_1.1fr]" : "lg:grid-cols-[1.1fr_1fr]"}`}
+          >
+            <div
+              class={`reveal ${i % 2 === 1 ? "lg:order-2" : ""}`}
+              style="aspect-ratio: 4/3;"
+            >
+              {s.data.photo && (
+                <div
+                  class="relative h-full overflow-hidden rounded-2xl"
+                  style="box-shadow: var(--shadow-card);"
+                >
+                  <Image
+                    src={s.data.photo}
+                    alt={`${s.data.title} project by J&Hong Construction`}
+                    class="absolute inset-0 h-full w-full object-cover"
+                    widths={[600, 900, 1200]}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div class="reveal">
+              <div class="flex items-center gap-4">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-xl"
+                  style="background-color: var(--color-ink); color: white;"
+                >
+                  <ServiceIcon name={s.data.icon} size={24} />
+                </div>
+                <p class="eyebrow">{s.data.eyebrow}</p>
+              </div>
+              <h2 class="display-2 mt-5">{s.data.title}</h2>
+              <p class="mt-5 text-base leading-relaxed md:text-lg">{s.data.summary}</p>
+
+              <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+                {s.data.highlights.map((h) => (
+                  <li class="flex items-start gap-3 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="mt-0.5 shrink-0"
+                      style="color: var(--color-copper);"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mt-9 flex flex-wrap gap-3">
+                <a
+                  href={`/contact?service=${encodeURIComponent(s.data.title)}`}
+                  class="btn btn-primary text-xs"
+                >
+                  Get a quote for {s.data.title}
+                </a>
+                <a href={`tel:${site.phone.tel}`} class="btn btn-ghost text-xs">
+                  {site.phone.display}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CTABanner />
+</BaseLayout>

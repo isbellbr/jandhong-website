@@ -1,0 +1,42 @@
+---
+import { site } from "../../site.config";
+
+interface Props {
+  title?: string;
+  body?: string;
+  variant?: "dark" | "light";
+}
+const {
+  title = "Ready for a roof you don't have to think about?",
+  body = "Free, no-pressure estimates. We'll inspect what you have, explain what you need, and put it on paper.",
+  variant = "dark",
+} = Astro.props;
+
+const isDark = variant === "dark";
+---
+
+<section
+  class="relative overflow-hidden"
+  style={`background-color: ${isDark ? "var(--color-ink)" : "var(--color-paper-deep)"}; color: ${isDark ? "white" : "var(--color-ink)"};`}
+>
+  <div class="container-x section-y relative">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow" style={isDark ? "color: var(--color-copper-soft);" : ""}>
+        Free estimate &middot; No pressure
+      </p>
+      <h2 class="display-2 mt-4" style={isDark ? "color: white;" : ""}>
+        {title}
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed opacity-85">{body}</p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+        <a href="/contact" class="btn btn-primary"> Request a Free Estimate </a>
+        <a
+          href={`tel:${site.phone.tel}`}
+          class={`btn ${isDark ? "btn-ghost-inverse" : "btn-ghost"}`}
+        >
+          {site.phone.display}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

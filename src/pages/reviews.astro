@@ -1,0 +1,113 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Testimonial from "../components/Testimonial.astro";
+import Stars from "../components/Stars.astro";
+import CTABanner from "../components/CTABanner.astro";
+import { site } from "../../site.config";
+
+const testimonials = (await getCollection("testimonials")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const featured = testimonials.find((t) => t.data.featured) ?? testimonials[0];
+const rest = testimonials.filter((t) => t !== featured);
+---
+
+<BaseLayout
+  title="Reviews"
+  description={`5-star rated on Google. Read what Maryland homeowners say about J&Hong Construction.`}
+>
+  <PageHero
+    eyebrow="Reviews"
+    title={`<span style='color: var(--color-copper-soft);'>5.0&star;</span> &middot; in our customers' own words.`}
+    body="Our reputation is built on referrals. Here's what real homeowners say about working with Mr. Hong and the crew."
+  />
+
+  <!-- ===== Rating summary ===== -->
+  <section class="section-y">
+    <div class="container-x">
+      <div
+        class="reveal mx-auto flex max-w-3xl flex-col items-center gap-5 rounded-2xl px-8 py-12 text-center"
+        style="background-color: var(--color-paper-deep); box-shadow: var(--shadow-soft);"
+      >
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-full"
+          style="background-color: var(--color-ink); color: var(--color-copper-soft);"
+        >
+          <Stars count={5} size={22} class="text-[color:var(--color-copper-soft)]" />
+        </div>
+        <p class="font-serif text-5xl leading-none md:text-6xl">5.0</p>
+        <p class="text-sm tracking-[0.12em] uppercase opacity-70">
+          Average rating on {site.rating.platform}
+        </p>
+        <a
+          href={site.rating.url}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-primary mt-2 text-xs"
+        >
+          See us on Google
+        </a>
+      </div>
+
+      <!-- Featured -->
+      {
+        featured && (
+          <div class="reveal mx-auto mt-16 max-w-4xl">
+            <Testimonial
+              author={featured.data.author}
+              location={featured.data.location}
+              service={featured.data.service}
+              source={featured.data.source}
+              rating={featured.data.rating}
+              large
+            >
+              {featured.body}
+            </Testimonial>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- ===== All testimonials ===== -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="grid gap-6 md:grid-cols-2">
+        {
+          rest.map((t, i) => (
+            <div class="reveal" style={`transition-delay: ${i * 60}ms;`}>
+              <Testimonial
+                author={t.data.author}
+                location={t.data.location}
+                service={t.data.service}
+                source={t.data.source}
+                rating={t.data.rating}
+              >
+                {t.body}
+              </Testimonial>
+            </div>
+          ))
+        }
+      </div>
+
+      <div
+        class="reveal mt-16 flex flex-col items-center gap-4 rounded-2xl px-8 py-12 text-center"
+        style="background-color: var(--color-ink); color: white;"
+      >
+        <p class="eyebrow" style="color: var(--color-copper-soft);">Worked with us?</p>
+        <h2 class="display-3" style="color: white;">We'd appreciate a quick review.</h2>
+        <p class="max-w-md text-sm opacity-80">
+          Word of mouth has built this company. If we've earned it, a few sentences on Google goes
+          a long way.
+        </p>
+        <a href={site.rating.url} target="_blank" rel="noopener" class="btn btn-primary text-xs">
+          Leave a Google review
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+</BaseLayout>
