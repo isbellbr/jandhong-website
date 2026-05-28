@@ -12,8 +12,8 @@ export const site = {
   url: "https://jandhongconstruction.com",
   founded: 1998,
   phone: {
-    display: "(410) 714-4664",
-    tel: "+14107144664",
+    display: "703-627-4253",
+    tel: "+17036274253",
   },
   email: "estimates@jandhongconstruction.com",
   address: {
@@ -33,9 +33,7 @@ export const site = {
     number: "109999",
   },
   hours: [
-    { day: "Monday – Friday", time: "7:00 AM – 6:00 PM" },
-    { day: "Saturday", time: "8:00 AM – 2:00 PM" },
-    { day: "Sunday", time: "Closed" },
+    { day: "Monday – Sunday", time: "Open 24 hours" },
   ],
   serviceArea: [
     "Gambrills",
