@@ -8,9 +8,10 @@ import Testimonial from "../components/Testimonial.astro";
 import Stars from "../components/Stars.astro";
 import CTABanner from "../components/CTABanner.astro";
 import heroImage from "../assets/photos/jandhong-hero-house.png";
-import metalRoof from "../assets/photos/jandhong-metal-roof-skylights.png";
-import windowsImg from "../assets/photos/jandhong-windows-trim.png";
-import crewRanch from "../assets/photos/jandhong-crew-roof-ranch.png";
+import whiteFarmhouse from "../assets/photos/jandhong-white-farmhouse-porch.png";
+import boardBattenRoof from "../assets/photos/jandhong-board-batten-metal-roof.png";
+import brickColonial from "../assets/photos/jandhong-brick-colonial-metal-roof.png";
+import crewSidingInstall from "../assets/photos/jandhong-crew-siding-install.png";
 import { site } from "../../site.config";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
@@ -215,8 +216,8 @@ const yearsActive = new Date().getFullYear() - site.founded;
           class="reveal group relative col-span-1 row-span-2 overflow-hidden rounded-2xl md:col-span-2"
         >
           <Image
-            src={heroImage}
-            alt="Cedar-shingle cape with new architectural asphalt roof"
+            src={whiteFarmhouse}
+            alt="White farmhouse with standing-seam metal roof, black accents, and covered front porch"
             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             widths={[600, 1000, 1600]}
             sizes="(max-width: 768px) 100vw, 66vw"
@@ -225,14 +226,14 @@ const yearsActive = new Date().getFullYear() - site.founded;
             class="absolute right-4 bottom-4 left-4 rounded-xl px-4 py-3 text-sm text-white backdrop-blur"
             style="background-color: rgba(15,27,45,0.55);"
           >
-            Cedar-shingle cape &middot; Full roof &amp; trim
+            Standing-seam metal roof &middot; Hardie siding &amp; trim
           </span>
         </a>
 
         <a href="/gallery" class="reveal group relative overflow-hidden rounded-2xl">
           <Image
-            src={metalRoof}
-            alt="Standing-seam metal roof with skylights"
+            src={boardBattenRoof}
+            alt="Board-and-batten commercial building with standing-seam metal roof"
             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             widths={[400, 700, 1000]}
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -241,14 +242,14 @@ const yearsActive = new Date().getFullYear() - site.founded;
             class="absolute right-3 bottom-3 left-3 rounded-xl px-3 py-2 text-xs text-white backdrop-blur"
             style="background-color: rgba(15,27,45,0.55);"
           >
-            Standing-seam metal &middot; Skylights
+            Standing-seam metal &middot; Board &amp; batten siding
           </span>
         </a>
 
         <a href="/gallery" class="reveal group relative overflow-hidden rounded-2xl">
           <Image
-            src={windowsImg}
-            alt="Painted brick cottage with new black-clad replacement windows"
+            src={brickColonial}
+            alt="Brick colonial home with new standing-seam metal roof and black shutters"
             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             widths={[400, 700, 1000]}
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -257,7 +258,7 @@ const yearsActive = new Date().getFullYear() - site.founded;
             class="absolute right-3 bottom-3 left-3 rounded-xl px-3 py-2 text-xs text-white backdrop-blur"
             style="background-color: rgba(15,27,45,0.55);"
           >
-            Window replacement
+            Metal roof &middot; Brick colonial
           </span>
         </a>
       </div>
@@ -318,9 +319,9 @@ const yearsActive = new Date().getFullYear() - site.founded;
           style="aspect-ratio: 4/3; box-shadow: var(--shadow-card);"
         >
           <Image
-            src={crewRanch}
-            alt="J&Hong crew on a ranch home roof"
-            class="absolute inset-0 h-full w-full object-cover"
+            src={crewSidingInstall}
+            alt="J&Hong crew installing weather-resistant barrier and siding on a home"
+            class="absolute inset-0 h-full w-full object-cover object-top"
             widths={[600, 1000, 1400]}
             sizes="(max-width: 768px) 100vw, 50vw"
           />

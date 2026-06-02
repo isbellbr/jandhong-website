@@ -32,6 +32,7 @@ const projects = defineCollection({
       category: z.enum(["Roofing", "Siding", "Windows", "Skylights", "Crew at Work"]),
       photo: image(),
       aspect: z.enum(["portrait", "landscape", "square"]).default("landscape"),
+      focalPoint: z.string().default("center"),
       featured: z.boolean().default(false),
       order: z.number().default(0),
     }),

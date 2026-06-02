@@ -7,6 +7,8 @@ interface Project {
   caption: string;
   category: string;
   photo: ImageMetadata;
+  aspect: "portrait" | "landscape" | "square";
+  focalPoint: string;
 }
 
 interface Props {
@@ -17,14 +19,17 @@ const { projects } = Astro.props;
 ---
 
 <div
-  class="grid auto-rows-[260px] gap-4 sm:grid-cols-2 sm:gap-5 md:auto-rows-[300px] lg:grid-cols-3 lg:gap-6"
+  class="grid auto-rows-[260px] grid-flow-dense gap-4 sm:grid-cols-2 sm:gap-5 md:auto-rows-[300px] lg:grid-cols-3 lg:gap-6"
   data-gallery
 >
   {
-    projects.map((p, i) => {
-      // Vary card spans for visual rhythm
-      const spans = ["sm:col-span-2 sm:row-span-2", "", "", "lg:row-span-2", "sm:col-span-2", ""];
-      const span = spans[i % spans.length];
+    projects.map((p) => {
+      const span =
+        p.aspect === "landscape"
+          ? "sm:col-span-2"
+          : p.aspect === "portrait"
+            ? "lg:row-span-2"
+            : "";
       return (
         <button
           type="button"
@@ -41,6 +46,7 @@ const { projects } = Astro.props;
             src={p.photo}
             alt={p.title}
             class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            style={`object-position: ${p.focalPoint};`}
             widths={[600, 1000, 1600]}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
