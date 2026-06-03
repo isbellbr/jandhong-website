@@ -4,7 +4,7 @@ slug: roofing
 eyebrow: Service 01
 icon: roof
 order: 1
-photo: ../../assets/photos/jandhong-crew-roof-cape.png
+photo: ../../assets/photos/jandhong-metal-roof-skylights.png
 summary: From a single leak to a complete tear-off and replacement, we install roofs built to outlast the weather. Architectural asphalt shingles, standing-seam metal, ice-and-water shield, ridge ventilation. Every layer done right, by the same crew that's been with us for over fifteen years.
 highlights:
   - Architectural asphalt shingle replacement
