@@ -6,5 +6,5 @@ photo: ../../assets/photos/jandhong-hero-house.png
 aspect: landscape
 focalPoint: center
 featured: true
-order: 7
+order: 11
 ---

@@ -6,5 +6,5 @@ photo: ../../assets/photos/jandhong-windows-trim.png
 aspect: square
 focalPoint: center
 featured: true
-order: 6
+order: 10
 ---

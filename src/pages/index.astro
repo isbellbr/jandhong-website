@@ -9,9 +9,9 @@ import Stars from "../components/Stars.astro";
 import CTABanner from "../components/CTABanner.astro";
 import heroImage from "../assets/photos/jandhong-hero-house.png";
 import whiteFarmhouse from "../assets/photos/jandhong-white-farmhouse-porch.png";
-import boardBattenRoof from "../assets/photos/jandhong-board-batten-metal-roof.png";
 import brickColonial from "../assets/photos/jandhong-brick-colonial-metal-roof.png";
 import crewSidingInstall from "../assets/photos/jandhong-crew-siding-install.png";
+import blueSiding from "../assets/photos/jandhong-blue-siding-replacement.png";
 import { site } from "../../site.config";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
@@ -232,8 +232,8 @@ const yearsActive = new Date().getFullYear() - site.founded;
 
         <a href="/gallery" class="reveal group relative overflow-hidden rounded-2xl">
           <Image
-            src={boardBattenRoof}
-            alt="Board-and-batten commercial building with standing-seam metal roof"
+            src={blueSiding}
+            alt="Blue home with replacement siding, white trim, and deck"
             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             widths={[400, 700, 1000]}
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -242,7 +242,7 @@ const yearsActive = new Date().getFullYear() - site.founded;
             class="absolute right-3 bottom-3 left-3 rounded-xl px-3 py-2 text-xs text-white backdrop-blur"
             style="background-color: rgba(15,27,45,0.55);"
           >
-            Standing-seam metal &middot; Board &amp; batten siding
+            Siding replacement &middot; Trim &amp; gutters
           </span>
         </a>
 

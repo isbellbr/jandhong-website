@@ -14,8 +14,12 @@ export const site = {
   phone: {
     display: "703-627-4253",
     tel: "+17036274253",
+    alternate: {
+      display: "410-714-4664",
+      tel: "+14107144664",
+    },
   },
-  email: "estimates@jandhongconstruction.com",
+  email: "jhongsince1998@gmail.com",
   address: {
     street: "1513 Branchwood Terrace",
     city: "Gambrills",
@@ -68,7 +72,7 @@ export const site = {
    * Stored here (not in .env) because Web3Forms keys are designed to be
    * public + protected by domain-allowlisting on their dashboard.
    */
-  web3formsKey: "REPLACE_WITH_WEB3FORMS_ACCESS_KEY",
+  web3formsKey: "845e6316-0122-43c0-8b65-039a8ba3d96b",
 } as const;
 
 export type Site = typeof site;

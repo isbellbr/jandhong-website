@@ -6,5 +6,5 @@ photo: ../../assets/photos/jandhong-crew-roof-cape.png
 aspect: square
 focalPoint: center
 featured: false
-order: 8
+order: 12
 ---

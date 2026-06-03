@@ -6,5 +6,5 @@ photo: ../../assets/photos/jandhong-crew-siding-install.png
 aspect: portrait
 focalPoint: 35% center
 featured: false
-order: 5
+order: 6
 ---

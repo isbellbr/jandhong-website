@@ -6,5 +6,5 @@ photo: ../../assets/photos/jandhong-board-batten-metal-roof.png
 aspect: square
 focalPoint: center
 featured: false
-order: 3
+order: 4
 ---

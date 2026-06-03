@@ -6,5 +6,5 @@ photo: ../../assets/photos/jandhong-crew-roof-ranch.png
 aspect: landscape
 focalPoint: center 45%
 featured: true
-order: 4
+order: 5
 ---
