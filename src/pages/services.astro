@@ -8,6 +8,7 @@ import CTABanner from "../components/CTABanner.astro";
 import { site } from "../../site.config";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const yearsActive = new Date().getFullYear() - site.founded;
 ---
 
 <BaseLayout
@@ -16,7 +17,7 @@ const services = (await getCollection("services")).sort((a, b) => a.data.order -
 >
   <PageHero
     eyebrow="Services"
-    title="Five trades.<br />Done by the same crew, for over <span style='color: var(--color-copper-soft);'>27 years</span>."
+    title={`Five trades.<br />Done by the same crew, for over <span style='color: var(--color-copper-soft);'>${yearsActive} years</span>.`}
     body="A focused roster of exterior services, done at a level we'd put on our own homes. Every job is supervised personally by Mr. Hong."
   />
 
